@@ -30,4 +30,6 @@ outputs/Kliff-Body-Editor/exports/
 outputs/Kliff-Anatomy-*/
 outputs/Kliff-Neutral-*/
 *.local.*
+*.nafit
+reference.bin
 .env*

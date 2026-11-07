@@ -15,9 +15,10 @@ cmake --build work/neutral-runtime/build --config Release
 ctest --test-dir work/neutral-runtime/build -C Release --output-on-failure
 ```
 
-The current configuration includes the experimental observer and ABI tests.
-It has not yet completed a build. Only the earlier solver-only build passed
-tests. Do not treat these commands as a verified binary release process.
+The current configuration includes the fitting backend, background control
+worker, motion core, experimental observer, and offline tests. The combined
+Release build and its tests pass locally. These are offline development checks,
+not a verified live game release process.
 No build/install step should copy an ASI into a live game automatically.
 
 ## Standalone editor

@@ -1,4 +1,5 @@
 #include "probe_context.h"
+#include "upload_profiles.h"
 #include <Windows.h>
 #include <MinHook.h>
 #include <cstdio>
@@ -17,6 +18,7 @@ void* chained_original=nullptr;
 int prior(){return 0x1234;}
 int replacement(){return reinterpret_cast<int(*)()>(chained_original)()+1;}
 int main(){
+ if(!neutral::upload_profile(0x6aeb7d59,0x13cff000)||!neutral::upload_profile(0x6aed2e85,0x13cc4000)||neutral::upload_profile(0x6aed2e85,0x13cff000)||neutral::upload_profile(0,0)){std::puts("FAIL executable profile guards");return 8;}
  gProbeOriginal=reinterpret_cast<void*>(&ProbeTestOriginal);reinterpret_cast<Eleven>(&ProbeEntry)(1,2,3,4,5,6,7,8,9,10,11);
  if(std::memcmp(before.gpr,after.gpr,sizeof(before.gpr))||std::memcmp(before.xmm,after.xmm,sizeof(before.xmm))||before.flags!=after.flags||before.mxcsr!=after.mxcsr||before.fcw!=after.fcw){std::puts("FAIL register/flags preservation");return 1;}
  gProbeOriginal=reinterpret_cast<void*>(&target);auto value=reinterpret_cast<Eleven>(&ProbeEntry)(1,2,3,4,5,6,7,8,9,10,11);std::uint64_t expected=0;for(int i=0;i<11;++i){if(args[i]!=i+1){std::puts("FAIL stack arguments");return 2;}expected^=i+1;}if(value!=expected){std::puts("FAIL return forwarding");return 3;}

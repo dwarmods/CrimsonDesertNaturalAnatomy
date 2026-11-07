@@ -1,0 +1,16 @@
+name: Native development checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S work/neutral-runtime -B work/neutral-runtime/build -G "Visual Studio 17 2022" -A x64
+      - name: Build
+        run: cmake --build work/neutral-runtime/build --config Release
+      - name: Offline tests
+        run: ctest --test-dir work/neutral-runtime/build -C Release --output-on-failure
+      # No game assets, process attachment, plugin installation, or release upload.
