@@ -1,0 +1,2 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch({headless:true,channel:'msedge'});const p=await b.newPage({viewport:{width:1440,height:1000}});p.on('pageerror',e=>console.error(e));await p.goto('http://127.0.0.1:48763');await p.waitForFunction(()=>window.editorReady);await p.locator('#focus').click();await p.screenshot({path:'work/editor-v11-front.png'});await p.locator('[data-view=side]').click();await p.screenshot({path:'work/editor-v11-side.png'});await b.close()})().catch(e=>{console.error(e);process.exit(1)});

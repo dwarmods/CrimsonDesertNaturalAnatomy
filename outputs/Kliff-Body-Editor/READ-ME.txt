@@ -1,0 +1,115 @@
+KLIFF BODY EDITOR 1.5
+
+START
+Extract the whole ZIP, then double-click Launch Editor.cmd.
+The editor opens in your browser. Keep the launcher window open while editing;
+close it when finished. A second launch reopens the existing editor.
+
+This is a separate, local fitting application. It does not require the game
+to be open. Rendering libraries are included; no internet service is used.
+The launcher uses your existing Codex Python runtime, or py -3 as a fallback.
+Blender is detected under Program Files or PATH for .blend export.
+Python 3.10+ is required. Blender 5.2.2 was used for validation.
+
+CONTROLS
+- Anatomy height - relative to pelvis: -30 to +30 mm. Moves the shaft and
+  scrotal region independently; torso vertices and the attachment rim stay
+  fixed, with a 25 mm transition inside the attached anatomy. This can
+  stretch or compress the attachment transition at larger displacements.
+- Attachment contour: negative values recess the join; positive values raise it.
+- Attachment smoothness: 0-100%, geometry smoothing around the entire ring.
+  The same isotropic rule and distance falloff apply around its circumference.
+  This preserves symmetry of symmetric input; it does not erase natural asymmetry.
+- Shaft width at base, middle and tip: 60-150%, side-to-side width only,
+  with smooth blending between those stations.
+- Shaft length, independently of testicle size.
+- Testicle size, hang adjustment and front/back clearance from the shaft.
+- Pelvis + anatomy height: the original -40 to +40 mm control, which also
+  moves the surrounding pelvis with a broad falloff.
+- Overall scale, width and depth remain available below the anatomy controls.
+- Left/right, forward/back and vertical placement in millimetres.
+- The attachment and surrounding torso deform together using a smooth falloff.
+- Front, side, back, full-body and fitting-region camera views.
+- Orbit: drag. Zoom: wheel. Pan: right-drag.
+- Wireframe, attachment highlighting and original-shape comparison.
+- Undo/redo (also Ctrl+Z / Ctrl+Shift+Z) and reset.
+
+SAVE AND EXPORT
+Save preset downloads a small JSON file; Load preset restores it.
+Version 1.3 loads 1.1 and 1.2 presets with neutral defaults for the new controls.
+The v0.4 body used by 1.1 and 1.2 starts a fresh fit from editor 1.0. Presets from editor 1.0 are preserved but
+are rejected by this revision because the default body and controls changed.
+Keep the older editor ZIP if you need to reopen those presets.
+
+Edits also autosave in this browser at http://127.0.0.1:48763. Use explicit
+preset files to transfer work between browsers or protect against cleared
+browser storage. A different server port has separate browser storage.
+
+Export Blender file produces a .blend with an "Editor fit" shape key,
+original materials, packed source textures, and retained vertex groups.
+The downloaded copy and the exports/ copy contain the same geometry.
+Each exports/ job also contains its preset, a validation report and a log.
+The exporter checks its evaluated geometry against the interactive preview.
+
+Export static OBJ produces geometry only, in metres with Z up. It has no
+textures, skeleton or skin weights. Choose Blender export to retain those.
+
+MODEL STATUS
+The supplied model is the revised connected-body v0.4 draft, not a finished
+realism mod. The preview uses studio clay to inspect shape. It does not show
+the original material's texture transition. The attachment ring was narrowed from 71.3 to 45.6 mm and fitted back to the
+body surface. Scrotal tissue was independently lowered and its lateral
+volume adjusted. Surface normals blend across the attachment.
+The attachment topology stays
+connected when edited, but extreme combined settings can distort or overlap
+the surface. Inspect your fit from several directions before exporting.
+
+In the fitting-region view the hands are hidden to expose the side silhouette.
+The face reference is incomplete; this is a body-fitting workspace.
+The default Kliff proportions are a static affine preview. Retained rig and
+weights are authoring data, not proof of working game animation.
+There is no PAC/DMM export, game installation, live synchronization, clothing
+visibility integration or runtime physics in this editor. No game or manager
+files are changed. The editor contains no arousal controls.
+
+ATTRIBUTION
+Anatomy source: Ultimate Realistic Penis Rig, ThineCrawler.
+https://smutba.se/project/8f757313-b08c-41b2-a61f-2105a31d4428/
+Licensed source: Creative Commons Attribution-ShareAlike 4.0 International.
+https://creativecommons.org/licenses/by-sa/4.0/
+Adaptations: neutral pose, placement and scale, attachment topology, material
+transition, skin weights and interactive fitting deformation.
+ShareAlike applies to adaptations of that licensed source asset.
+
+The body/skeleton/texture references came from your local Crimson Desert
+installation. They are not relicensed under Creative Commons. This package
+is for your local work; it is not a redistribution-cleared game asset release.
+
+Three.js r180: MIT, copyright its authors. Full license:
+web/vendor/THREE-LICENSE.txt. The rendering library is included locally.
+
+SURFACE REVISION 1.4
+The attachment now uses six intermediate rings rather than a long triangle fan.
+Base geometry fairing and normal continuity cleanup are applied automatically.
+The smoothness slider adds further fairing. Contour influences the full ring.
+Scrotal surface fairing reduces sharp folds after deformation. Overall anatomy
+scale no longer enlarges the surrounding pelvis; the broader pelvis position
+control remains available. Saved control values are retained, but corrected
+geometry and deformation fields can change the resulting shape.
+The neutral body mesh is baked for this static editor. Bone groups and the
+reference skeleton are retained; a runtime rig is still not supplied.
+
+SURFACE REVISION 1.5
+Adds a continuous metric fairing patch after the broad attachment relaxation:
+9,714 vertices. Its physical smoothing radius ranges from
+4 to 9 mm, so small dense triangles no longer receive ineffective cleanup.
+The patch crosses the old scrotal/shaft weight boundary and tapers to a fixed
+outer boundary. The attachment loft now follows the pelvis surface tangent.
+The relative-height control retains its existing deformation field;
+the torso, attachment rim, and fully translated core retain their placement
+behavior. Existing presets and slider values are retained.
+Smoothing can reduce local volume and change the shape of an existing fit.
+This is a static mesh correction, not a verified in-game replacement. The
+original materials remain in Blender exports; texture seam work is separate.
+The geometry solver uses NumPy bundled with Blender; the local server still
+uses Python's standard library. No additional download is needed.

@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.cmd text eol=crlf
+outputs/Kliff-Body-Editor/web/vendor/** -whitespace
+work/neutral-runtime/vendor/** -whitespace

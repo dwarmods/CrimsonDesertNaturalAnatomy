@@ -1,0 +1,17 @@
+from pathlib import Path
+APP=Path(__file__).resolve().parent.parent/'outputs/Kliff-Body-Editor'
+f=APP/'web/app.js';s=f.read_text()
+s=s.replace('body,bodyRow,original,', 'body,bodyRow,bodyBaseNormals,original,')
+s=s.replace('body=mesh;bodyRow=row;original=', 'body=mesh;bodyRow=row;bodyBaseNormals=new Float32Array(geo.attributes.normal.array);original=')
+s=s.replace('bodyRow.seamNormalWeights[i]*Math.max(0,1-Math.abs(params.attachment_contour)/2)*(1-params.attachment_smoothness)', 'bodyRow.seamNormalWeights[i]')
+s=s.replace('bodyRow.seamNormals[j]*w', '(bodyRow.seamNormals[j]+normals[j]-bodyBaseNormals[j])*w')
+f.write_text(s)
+f=APP/'export_blend.py';s=f.read_text()
+s=s.replace("key=ob.shape_key_add(name='Editor fit')", "base_normals=[v.normal.copy() for v in ob.evaluated_get(bpy.context.evaluated_depsgraph_get()).data.vertices]\nkey=ob.shape_key_add(name='Editor fit')")
+s=s.replace("row['seamNormalWeights'][i]*max(0,1-abs(p['attachment_contour'])/2)*(1-p['attachment_smoothness'])", "row['seamNormalWeights'][i]")
+s=s.replace("Vector(row['seamNormals'][3*i:3*i+3]),w", "Vector(row['seamNormals'][3*i:3*i+3])+n-base_normals[i],w")
+f.write_text(s)
+f=APP/'READ-ME.txt';s=f.read_text().replace('KLIFF BODY EDITOR 1.1','KLIFF BODY EDITOR 1.2')
+s=s.replace('CONTROLS\n','CONTROLS\n- Attachment contour: negative values recess the join; positive values raise it.\n- Attachment smoothness: 0-100%, geometry smoothing around the entire ring.\n  The same isotropic rule and distance falloff apply around its circumference.\n  This preserves symmetry of symmetric input; it does not erase natural asymmetry.\n- Shaft width at base, middle and tip: 60-150%, side-to-side width only,\n  with smooth blending between those stations.\n')
+s=s.replace('Revision 1.1 starts a fresh fit.', 'Version 1.2 loads 1.1 presets with neutral defaults for the new controls.\nThe v0.4 body used by 1.1 and 1.2 starts a fresh fit from editor 1.0.')
+f.write_text(s)

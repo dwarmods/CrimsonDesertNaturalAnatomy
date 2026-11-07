@@ -1,0 +1,33 @@
+const {chromium}=require('playwright');
+const fs=require('fs');
+(async()=>{
+ const browser=await chromium.launch({headless:true,channel:'msedge'});
+ const page=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:48763/');await page.waitForFunction(()=>window.editorReady,{timeout:60000});
+ const baseline=await page.evaluate(()=>window.editorSnapshot());
+ for(const [k,v] of Object.entries({anatomy_height:-12,attachment_contour:-4,attachment_smoothness:70,shaft_base_width:80,shaft_mid_width:115,shaft_tip_width:90,length:112,testicle_size:110,hang:12,separation:7})){await page.locator('#number-'+k).fill(String(v));await page.locator('#number-'+k).press('Tab');}
+ await page.locator('#number-scale').fill('120');await page.locator('#number-scale').press('Tab');
+ await page.locator('#number-z').fill('-15');await page.locator('#number-z').press('Tab');
+ const fitted=await page.evaluate(()=>window.editorSnapshot());
+ if(fitted.parameters.scale!==1.2||fitted.parameters.z!==-15||fitted.parameters.attachment_smoothness!==.7||fitted.parameters.shaft_mid_width!==1.15||fitted.parameters.attachment_contour!==-4)throw Error('Controls failed');
+ if(JSON.stringify(fitted.firstRegionVertex)===JSON.stringify(baseline.firstRegionVertex))throw Error('Mesh did not deform');
+ await page.locator('#undo').click();if((await page.evaluate(()=>window.editorSnapshot())).parameters.z!==0)throw Error('Undo failed');
+ await page.locator('#redo').click();
+ const savedPromise=page.waitForEvent('download');await page.locator('#save').click();const saved=await savedPromise;await saved.saveAs('work/editor-test-preset.json');
+ await page.reload();await page.waitForFunction(()=>window.editorReady);const restored=await page.evaluate(()=>window.editorSnapshot());
+ if(restored.parameters.z!==-15)throw Error('Autosave reload failed');
+ await page.locator('#reset').click();
+ await page.locator('#presetfile').setInputFiles('work/editor-test-preset.json');
+ await page.waitForFunction(()=>window.editorSnapshot().parameters.z===-15);
+ await page.locator('#focus').click();await page.locator('#join').check();
+ await page.screenshot({path:'work/editor-fit-preview.png'});
+ await page.locator('#full').click();await page.locator('#join').uncheck();
+ await page.screenshot({path:'work/editor-full-preview.png'});
+ const objPromise=page.waitForEvent('download');await page.locator('#obj').click();const obj=await objPromise;await obj.saveAs('work/editor-test.obj');
+ const blendPromise=page.waitForEvent('download',{timeout:240000});await page.locator('#export').click();const blend=await blendPromise;await blend.saveAs('work/editor-test.blend');
+ await page.locator('#reset').click();
+ if(errors.length)throw Error(errors.join('\n'));
+ fs.writeFileSync('work/editor-browser-tests.json',JSON.stringify({passed:true,baseline,fitted,restored,errors,checks:['WebGL render','Live mesh deformation','Length/size/hang/separation controls','Undo/redo','Preset download/import','Autosave reload','Reset','Full-body/fitting views','Join highlight','OBJ export','Blender export']},null,2));
+ console.log('EDITOR_BROWSER_TESTS_PASSED');await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

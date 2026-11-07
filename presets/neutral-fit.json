@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "asset": "kliff-connected-v04",
+  "parameters": {
+    "anatomy_height": -12,
+    "attachment_contour": -4,
+    "attachment_smoothness": 0.7,
+    "shaft_base_width": 0.8,
+    "shaft_mid_width": 1.15,
+    "shaft_tip_width": 0.9,
+    "length": 1.12,
+    "testicle_size": 1.1,
+    "hang": 12,
+    "separation": 7,
+    "z": -15,
+    "scale": 1.2,
+    "width": 1,
+    "depth": 1,
+    "x": 0,
+    "y": 0
+  }
+}
