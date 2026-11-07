@@ -17,6 +17,7 @@ see its documentation for exact fingerprints and verification limits.
 | Blender fitting rig | Authoring controls exist; they are not new native game bones. |
 | Passive motion solver | Combined native build and offline numerical tests pass. Not connected to visible game geometry. |
 | Native slider backend | All 16 fitting controls ported; 36 full-mesh parity cases pass. Background revision-checked control worker tested. No in-game menu or render binding yet. |
+| Native slider panel and presets | Grouped Dear ImGui panel with tested mouse edits, undo/reset and unbound-state gating. Strict editor-compatible JSON import/export and atomic saving tested. The panel is not hosted inside the game yet. |
 | Upload-path observer | Compiles and passes offline ABI tests. Includes guarded profiles for the previous image and the changed installed executable. Live behavior remains unverified. |
 | In-game sliders and naked physics | **Unfinished.** Requires verified actor, geometry/pose, visibility, and render-update bindings. |
 
@@ -40,3 +41,5 @@ See [build notes](docs/BUILD.md), [native sliders](docs/SLIDERS.md),
 [probe](docs/PROBE.md), [runtime status](docs/RUNTIME.md), and
 [attribution](THIRD_PARTY_NOTICES.md). No general license has yet been selected
 for project-authored code; the included third-party components retain their own licenses.
+
+![Native slider panel rendered in the offline software preview](docs/images/native-panel.png)

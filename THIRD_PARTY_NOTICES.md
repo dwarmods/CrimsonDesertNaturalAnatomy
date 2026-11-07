@@ -1,5 +1,25 @@
 # Attribution and asset boundaries
 
+## Dear ImGui
+
+Subset vendored at `work/neutral-runtime/vendor/imgui`, including the DX11 and
+Win32 backends. Version 1.91.5-docking, commit
+`368123ab06b2b573d585e52f84cd782c5c006697` from https://github.com/ocornut/imgui.
+MIT license; copyright Omar Cornut and Dear ImGui contributors. Full terms are
+in that directory's `LICENSE.txt`. The accompanying stb headers preserve their
+own notices. No system font files are distributed.
+
+## JSON for Modern C++
+
+Single header vendored at `work/neutral-runtime/vendor/nlohmann/json.hpp`.
+Version 3.11.3, commit `9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03` from
+https://github.com/nlohmann/json. MIT license; copyright Niels Lohmann.
+Full terms are in `LICENSE.MIT` beside the header.
+
+`work/neutral-runtime/vendor/DEPENDENCIES.json` records original upstream Git
+blob IDs for these files. `python work/verify_native_dependencies.py` verifies
+the checked-in copies without network access.
+
 ## MinHook
 
 Vendored at `work/neutral-runtime/vendor/minhook`. Its BSD-style license,

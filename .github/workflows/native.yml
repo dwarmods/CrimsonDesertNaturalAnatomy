@@ -7,6 +7,8 @@ jobs:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
+      - name: Verify pinned UI dependencies
+        run: python work/verify_native_dependencies.py
       - name: Configure
         run: cmake -S work/neutral-runtime -B work/neutral-runtime/build -G "Visual Studio 17 2022" -A x64
       - name: Build

@@ -54,3 +54,38 @@ stale edits, immutable output snapshots, and 200 coalesced drag updates.
    revision only after the actual body uses that geometry.
 
 The current build has no in-game menu and changes no game body geometry.
+
+## Native panel and preset components
+
+`neutral_slider_panel` now renders all 16 controls through Dear ImGui, grouped
+by position, shaft, testicles, attachment, and overall size. It includes undo
+(up to 32 completed edits), reset, and load/save action requests. Actual
+mouse-input tests exercise sliders, undo/reset, external edits, edits arriving
+mid-gesture, and disabling controls while waiting for a verified binding.
+
+Call `SliderPanel::draw()` only on the UI thread, inside the host's ImGui frame.
+The default `OfflinePreview` mode edits the CPU fitting session. The
+`AwaitingBinding` mode disables editing. Neither mode claims live game updates.
+`take_preset_action()` hands file actions to the host; the host must implement
+file selection/IO outside the render callback. No game overlay host is wired
+to this component yet. Both input routing and renderer lifecycle integration
+remain required before it can run in-game.
+
+`neutral_presets` imports and exports the editor's schema-1
+`kliff-connected-v04` JSON presets. It rejects unsupported structure, duplicate
+keys, wrong types, body/schema mismatches, and out-of-range controls. Values
+round-trip without precision loss. Saving creates an exclusive same-directory
+temporary file, writes and flushes it, then atomically replaces the target.
+Failed writes/replacements leave the existing preset intact. Nothing is saved
+automatically and no game save is read or modified.
+
+To render a PNG of the real panel offline:
+
+```powershell
+work/neutral-runtime/build/Release/neutral_panel_preview.exe <output.png> presets/neutral-fit.json
+```
+
+This uses a separate software D3D11 device and no window or process attachment.
+It is a development preview, not an in-game screenshot. The preview uses a
+locally installed Segoe UI font when present, otherwise ImGui's bundled font;
+no system font files are shipped. The panel itself is renderer-independent.

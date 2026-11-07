@@ -21,6 +21,19 @@ Release build and its tests pass locally. These are offline development checks,
 not a verified live game release process.
 No build/install step should copy an ASI into a live game automatically.
 
+The native build also contains the Dear ImGui panel, preset component,
+interaction tests, and a software D3D11 PNG preview executable. Dear ImGui
+and JSON for Modern C++ are vendored at pinned commits; configuring this
+build does not fetch them. Verify their source hashes with:
+
+```powershell
+python work/verify_native_dependencies.py
+```
+
+The panel is an offline-tested component. It has not been connected to an
+in-game renderer/input host. Load/save buttons emit action requests for the
+future host; they do not open file dialogs or alter game files by themselves.
+
 ## Standalone editor
 
 Requirements: Python 3, a browser, and Blender for `.blend` exports. The local

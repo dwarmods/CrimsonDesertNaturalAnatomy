@@ -1,0 +1,33 @@
+{
+  "imgui": {
+    "repository": "https://github.com/ocornut/imgui",
+    "commit": "368123ab06b2b573d585e52f84cd782c5c006697",
+    "version": "1.91.5-docking",
+    "files": {
+      "imgui.h": "c32efb05ba453e4cd490a86c5a64b4b6ea594a8e",
+      "imconfig.h": "fea89dea0913b09a0df08ff33d4075e4c99aad00",
+      "imgui_internal.h": "f54e8c8c4128c858f759affcfc4d7c156118d450",
+      "imstb_rectpack.h": "f6917e7a6e56a03dcee169bf4e08c32611b761c9",
+      "imstb_textedit.h": "b7a761c85381993be0f4cd78539f277c06eb407e",
+      "imstb_truetype.h": "976f09cb92780b0d0db6fdfa3b2714df2567b320",
+      "imgui.cpp": "97d5f40ce258d3924fad9add9e4445606fc06052",
+      "imgui_draw.cpp": "56c7867ff00f53eecbd16b8c8b445f2be204feb1",
+      "imgui_tables.cpp": "e36e6f17289e8472cac162d65c5769c4c33f61e3",
+      "imgui_widgets.cpp": "59fb2de59627836a9dc2638177b1ea18cac82ab8",
+      "LICENSE.txt": "3282f5b5b105440af25c030c29bea5a24fddf496",
+      "backends/imgui_impl_dx11.h": "cf3acaa14c089866c3495ebfae860b72f36bfd67",
+      "backends/imgui_impl_dx11.cpp": "b90b1e44b52728e9ba32abe31eda3f7a0f437405",
+      "backends/imgui_impl_win32.h": "39db9505cf8e22d6feabee76bea4c6516aaa175b",
+      "backends/imgui_impl_win32.cpp": "e48e6f6d659dfd8bd824da3a9e679bc585dee32c"
+    }
+  },
+  "nlohmann": {
+    "repository": "https://github.com/nlohmann/json",
+    "commit": "9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03",
+    "version": "3.11.3",
+    "files": {
+      "json.hpp": "8b72ea6539f40e4e3f7762d17e30c67f2a8308ed",
+      "LICENSE.MIT": "1c1f7a690d815db3a79ea3d4c9138a497e2e7702"
+    }
+  }
+}
